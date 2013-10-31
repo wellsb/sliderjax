@@ -1,0 +1,3 @@
+in this directory is everything you need to use the servo control board
+
+you still need to install the packages listed on adafruit and do the modprobe/modules stuff

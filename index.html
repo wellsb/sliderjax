@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="jquery-ui.css" type="text/css" media="all">
+        <link rel="stylesheet" href="sliderjax.css" type="text/css" media="all">
+        <script type="text/javascript" src="../jquery/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../jquery/jquery-ui-1.10.3/js/jquery-ui-1.10.3.custom.min.js"></script>
+        <script type="text/javascript" src="../jquery/jquery.ui.touch-punch.min.js"></script>
+
+
+    </head>
+    <body>
+        <div id="wrapper" class="ui-widget-content">
+            <div id="leftgroup" class="ui-widget-content">
+                <div id="dialog" class="ui-widget-content"></div>
+                
+                
+                <div id="controls">
+                    <div id="textboxs">
+                        <div id="textbox">
+                            <form>
+                                File: <input id="filebox" type="text" value="NewRecording">
+                            </form>
+
+                        </div>
+                    
+                        <div id="textbox">
+                            <form>
+                                Loop Speed: <input id="loopspeed" type="text" value="500" class="speed">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="butopen">Open</div>
+                    <div id="butsave">Save</div>
+                    <div id="butempty">Empty</div>
+                    <div id="butreset">Reset</div>
+                    <div id="butlist">List</div>
+                    <div id="butloopstart">></div>
+                    <div id="butloopstop">[ ]</div>
+                </div>
+
+                    <div id="spacer"></div>
+
+                    <div id="labelfl1">fl1</div>
+                    <div id="slidercont">
+                        <div id="sliderfl1"></div>
+                    </div>
+                    <div id="labelfl2">fl2</div>
+                    <div id="slidercont">
+                        <div id="sliderfl2"></div>
+                    </div>
+
+                   <div id="labelfr1">fr1</div>
+                    <div id="slidercont">
+                        <div id="sliderfr1"></div>
+                    </div>
+                   
+                   <div id="labelfr2">fr2</div>
+                    <div id="slidercont">
+                        <div id="sliderfr2"></div>
+                    </div>
+
+                   <div id="labelbl1">bl1</div>
+                    <div id="slidercont">
+                        <div id="sliderbl1"></div>
+                    </div>
+
+                    <div id="labelbl2">bl2</div>
+                    <div id="slidercont">
+                        <div id="sliderbl2"></div>
+                    </div>
+
+                   <div id="labelbr1">br1</div>
+                    <div id="slidercont">
+                        <div id="sliderbr1"></div>
+                    </div>
+
+                   <div id="labelbr2">br2</div>
+                    <div id="slidercont">
+                        <div id="sliderbr2"></div>
+                    </div>
+
+                   <div id ="botleft"></br></div>
+            </div>
+            <div id="rightgroup" class="ui-widget-content">
+                <div id="dialogright" class="ui-widget-content"></div>
+
+                    <div id="listingcont" class="ui-widget-content">
+                        <!--"entry" listings are ajax injected here !-->
+                    </div>
+            </div>
+        </div>
+        <div id="underwrapper"></div>
+        <div id="holder" class="ui-widget-content"></div>
+        <div id="holderforfilelist"></div>
+        <div id="holderforparsedfilelist"></div>
+        
+        <script type="text/javascript" src="sliderjax.js"></script>
+    </body>
+</html>

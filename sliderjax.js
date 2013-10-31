@@ -1,7 +1,7 @@
             //Globals
             var handler = 'handler.php';
             var servomin = 200;
-            var servomax = 535;
+            var servomax = 525;
             
             // loop manager (loopstart, loopit, loopstop)
             var currentout =''; // the status of the current output in botleft output div

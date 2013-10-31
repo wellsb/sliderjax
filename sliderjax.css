@@ -203,3 +203,12 @@ root {
     background: #eeeeee;
     border:1px solid #cccccc;
 }
+
+.filelisting {
+    width: 100%;
+    margin: 1px;
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #000000;
+    background: #eeeeee;
+}

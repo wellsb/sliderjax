@@ -1,7 +1,7 @@
             //Globals
             var handler = 'handler.php';
             var servomin = 200;
-            var servomax = 525;
+            var servomax = 535;
             
             // loop manager (loopstart, loopit, loopstop)
             var currentout =''; // the status of the current output in botleft output div
@@ -96,8 +96,13 @@
                 })
             }
             
-            function load() {
-                fileasval = $("#filebox").val() + '.rec';
+            function load(filename) {
+                if (null == filename) {
+                    fileasval = $("#filebox").val() + '.rec';
+                } else {
+                    fileasval = filename;
+                }
+                
                 $('#listingcont').html('');
                 $("#holder").load(handler, {action: 'get', file: fileasval}, function() {
                     var entries = '';
@@ -127,11 +132,14 @@
 
             function loopstart() {
                 loopspeed = $("#loopspeed").val();
+                if (loopspeed < 200) {
+                    loopspeed = 200;
+                }
+
                 loopstack = [];
                 $(".readline").each(function(){
                     loopstack.push ($(this).text());
                 });
-
                 loopintid = setInterval('loopit()', loopspeed);
             }
 
@@ -181,7 +189,6 @@
                         }
                         flag_alreadylisted = 1;
                     }
-
                 });
                 $(function() {
                     $( "#holderforparsedfilelist" ).dialog();
@@ -192,13 +199,23 @@
                 controller('move');
             })
 
-            // delegated (.on() as these class's are injected
+            // load pos from right - delegated (.on() as these class's are injected
             $(listingcont).on('click','.readline',function(){
                 var thisid = $(this).attr('id');
                 var contains = $('#'+thisid).text();
                 moveto(contains);
             });
-
+            
+            // open from open file dialog - delegated (.on() as these class's are injected
+            $(holderforparsedfilelist).on('click','.filelisting',function(){
+                var thisid = $(this).attr('id');
+                var contains = $('#'+thisid).text();
+                load(contains);
+                $('#dialogright').html(contains);
+                contains = contains.substring(0, contains.length - 4);
+                $("#filebox").val(contains);
+            });
+            
             $("#butsave").click(function(){
                 controller('save');
             });

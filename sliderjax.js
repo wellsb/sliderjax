@@ -9,10 +9,11 @@
             var loopintid = ''; // set interval id for clearinterval
             var loopstack = []; // the current lines of open .rec
             var loopstackpos = 0; // used in loopit() to track progress on each call through setIntval
-            //var loopspeed = 500; // millisecs between each new instruction being sent
+            var loopstatus = 0; // is the loop running
 
             // start positions at init
             //var fl1startpos = Math.round((servomin+servomax)/2);
+            var speedsliderstartpos = 300;
             var fl1startpos = 362;
             var fl2startpos = 368;
             var fr1startpos = 393;
@@ -131,6 +132,7 @@
             }
 
             function loopstart() {
+                loopstatus = 1;
                 loopspeed = $("#loopspeed").val();
                 if (loopspeed < 200) {
                     loopspeed = 200;
@@ -158,6 +160,7 @@
             }
 
             function loopstop(loopintid) {
+                loopstatus = 0;
                 clearInterval(loopintid);
             }
 
@@ -197,6 +200,15 @@
 
             $("#filebox").on('input', function(){
                 controller('move');
+            })
+
+            $("#loopspeed").on('input', function(){
+                loopspeed = $("#loopspeed").val();
+                $("#speedslider").slider({value: loopspeed});
+                if (loopstatus == 1) {
+                    loopstop(loopintid)
+                    loopstart();
+                }
             })
 
             // load pos from right - delegated (.on() as these class's are injected
@@ -242,6 +254,20 @@
             
             $("#butloopstop").click(function(){
                 loopstop(loopintid);
+            });
+
+            $( "#speedslider" ).slider({
+                value: speedsliderstartpos,
+                min: 200,
+                max: 1000,
+                slide: function( event, ui ) {
+                    loopspeed = $("#speedslider").slider("option", "value");
+                    $("#loopspeed").val(loopspeed);
+                    if (loopstatus == 1) {
+                        loopstop(loopintid)
+                        loopstart();
+                    }
+                }
             });
 
             $( "#sliderfl1" ).slider({

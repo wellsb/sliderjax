@@ -10,13 +10,12 @@ root {
     float: left;
     margin: 0 auto;
     width: 960px;
-    /*height: 200px;*/
     /*background-color: #ffcccc;*/
 }
 
 #underwrapper {
-    display: none;
-    width: 760px;
+    display: block;
+    width: 685px;
     height: 500px;
     background-color: #ff0000;
 }
@@ -206,15 +205,73 @@ root {
 #botleft {
     display: block;
     float: left;
-    width: 685px;
-    height: 140px;
+    width: 230px;
+    height: 138px;
     overflow:auto;
     margin: 0px 0px 0px 0px;
     padding: 0;
     font-family: sans-serif;
+    font-size: 10px;
     word-wrap: normal;
     color: #000000;
     background: #dedede;
+    border:1px solid #cccccc;
+}
+
+#paddle {
+    display: block;
+    float: left;
+    width: 200px;
+    height: 138px;
+    overflow:auto;
+    margin: 0px 0px 0px 0px;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 10px;
+    word-wrap: normal;
+    color: #000000;
+    background: #dedede;
+    border:1px solid #cccccc;
+}
+
+#paddlehandle {
+    display: relative;
+    width: 25px;
+    height: 25px;
+    border:1px solid #aaaaaa;
+    background: #bbbbbb;
+}
+
+#paddleloaders {
+    display: block;
+    float: left;
+    width: 249px;
+    height: 138px;
+    overflow:auto;
+    margin: 0px 0px 0px 0px;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 10px;
+    word-wrap: normal;
+    color: #000000;
+    background: #dedede;
+    border:1px solid #cccccc;
+    line-height: 10px;
+}
+
+#paddleloaderlabel {
+    display: block;
+    float: left;
+    width: 15px;
+    height: 138px;
+    overflow:auto;
+    margin: 0px 3px 0px 0px;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 11px;
+    text-align: right;
+    line-height: 12px;
+    color: #000000;
 }
 
 #butsave, #butreset, #butlist, #butopen, #butempty, #butloopstart, #butloopstop {

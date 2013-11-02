@@ -11,9 +11,14 @@
             var loopstackpos = 0; // used in loopit() to track progress on each call through setIntval
             var loopstatus = 0; // is the loop running
 
-            // start positions at init
+            // paddle pos's
+            var midpointhigh = $('#paddle').height() / 2 - 30;
+            var midpointlow = $('#paddle').height() / 2 + 20;
+            var midpointwest = $('#paddle').width() / 2 - 40;
+            var midpointeast = $('#paddle').width() / 2 + 20;
+
             //var fl1startpos = Math.round((servomin+servomax)/2);
-            var speedsliderstartpos = 300;
+            var speedsliderstartpos = 500;
             var fl1startpos = 362;
             var fl2startpos = 368;
             var fr1startpos = 393;
@@ -34,8 +39,11 @@
             var br2 = '';
 
             var fileasval = $("#filebox").val() + '.rec';
-            var loopspeed = $("#loopspeed").val()
             var flag_alreadylisted = 0;
+
+            //INIT
+            
+            init();
 
             function controller(action) {
                 fl1 = $("#sliderfl1").slider("option", "value");
@@ -61,6 +69,59 @@
                         //controller('move');
                     }
                 }
+                }
+            }
+
+            function onpaddlemove() {
+                var currentplaying = '';
+                var toplay = '';
+                var tempout = '';
+                var offsettop = $('#paddlehandle').offset().top - $('#paddlehandle').parent().offset().top - $('#paddlehandle').parent().scrollTop()
+                var offsetleft = $('#paddlehandle').offset().left - $('#paddlehandle').parent().offset().left - $('#paddlehandle').parent().scrollTop()
+
+                if (offsettop < midpointhigh && offsetleft > midpointwest && offsetleft < midpointeast) {
+                    tempout = tempout + '<br/>N';
+                    toplay = 'walk01.rec';
+                }
+
+                if (offsettop < midpointhigh && offsetleft < midpointwest) {
+                    tempout = tempout + '<br/>NW';
+                }
+
+                if (offsettop < midpointhigh && offsetleft > midpointeast) {
+                    tempout = tempout + '<br/>NE';
+                }
+
+                if (offsettop > midpointlow && offsetleft > midpointwest && offsetleft < midpointeast) {
+                    tempout = tempout + '<br/>S';
+                }
+
+                if (offsettop > midpointlow && offsetleft < midpointwest) {
+                    tempout = tempout + '<br/>SW';
+                }
+
+                if (offsettop > midpointlow && offsetleft > midpointeast) {
+                    tempout = tempout + '<br/>SE';
+                }
+
+                if (offsettop < midpointlow && offsettop > midpointhigh && offsetleft > midpointeast) {
+                    tempout = tempout + '<br/>E';
+                    toplay = 'turnRight.rec';
+                }
+
+                if (offsettop < midpointlow && offsettop > midpointhigh && offsetleft < midpointwest) {
+                    tempout = tempout + '<br/>W';
+                    toplay = 'turnLeft.rec';
+                }
+                $('#underwrapper').html(tempout);
+                
+                 if (currentplaying != toplay) {
+                     currentplaying = toplay;
+                     if (loopstatus == 1) {
+                        loopstop(loopintid)
+                        load(toplay);
+                        setTimeout('loopstart()', 500);
+                    }
                 }
             }
 
@@ -146,7 +207,7 @@
             }
 
             function loopit() {
-                currentout = currentout + "<br/>" + instruction + " " + loopspeed + " loopstack: " + loopstack[loopstackpos];
+                currentout = currentout + "<br/>" + instruction + ":" + loopspeed + "-" + loopstack[loopstackpos];
                 moveto(loopstack[loopstackpos]  );
                 $("#botleft").html(currentout);
                 if (loopstackpos < loopstack.length - 1) {
@@ -165,16 +226,18 @@
             }
 
             function moveto(setstr){
-                var thisset = setstr.split(',');
-                $("#sliderfl1").slider({value: thisset[0]});
-                $("#sliderfl2").slider({value: thisset[1]});
-                $("#sliderfr1").slider({value: thisset[2]});
-                $("#sliderfr2").slider({value: thisset[3]});
-                $("#sliderbl1").slider({value: thisset[4]});
-                $("#sliderbl2").slider({value: thisset[5]});
-                $("#sliderbr1").slider({value: thisset[6]});
-                $("#sliderbr2").slider({value: thisset[7]});
-                controller('move');
+                if (setstr != undefined) {
+                    var thisset = setstr.split(',');
+                    $("#sliderfl1").slider({value: thisset[0]});
+                    $("#sliderfl2").slider({value: thisset[1]});
+                    $("#sliderfr1").slider({value: thisset[2]});
+                    $("#sliderfr2").slider({value: thisset[3]});
+                    $("#sliderbl1").slider({value: thisset[4]});
+                    $("#sliderbl2").slider({value: thisset[5]});
+                    $("#sliderbr1").slider({value: thisset[6]});
+                    $("#sliderbr2").slider({value: thisset[7]});
+                    controller('move');
+                }
             }
 
             function resetit() {
@@ -196,6 +259,11 @@
                 $(function() {
                     $( "#holderforparsedfilelist" ).dialog();
                 });
+            }
+            
+            function init() {
+                $("#loopspeed").val(speedsliderstartpos);
+                setTimeout('onpaddlemove()', 2000);
             }
 
             $("#filebox").on('input', function(){
@@ -256,7 +324,7 @@
                 loopstop(loopintid);
             });
 
-            $( "#speedslider" ).slider({
+            $("#speedslider").slider({
                 value: speedsliderstartpos,
                 min: 200,
                 max: 1000,
@@ -270,7 +338,7 @@
                 }
             });
 
-            $( "#sliderfl1" ).slider({
+            $("#sliderfl1").slider({
                 value: fl1startpos,
                 min: servomin,
                 max: servomax,
@@ -279,7 +347,7 @@
                 }
             });
 
-            $( "#sliderfl2" ).slider({
+            $("#sliderfl2").slider({
                 value: fl2startpos,
                 min: servomin,
                 max: servomax,
@@ -288,7 +356,7 @@
                 }
             });
 
-            $( "#sliderfr1" ).slider({
+            $("#sliderfr1").slider({
                 value: fr1startpos,
                 min: servomin,
                 max: servomax,
@@ -297,7 +365,7 @@
                 }
             });
             
-            $( "#sliderfr2" ).slider({
+            $("#sliderfr2").slider({
                 value: fr2startpos,
                 min: servomin,
                 max: servomax,
@@ -306,7 +374,7 @@
                 }
             });
 
-            $( "#sliderbl1" ).slider({
+            $("#sliderbl1").slider({
                 value: bl1startpos,
                 min: servomin,
                 max: servomax,
@@ -315,7 +383,7 @@
                 }
             });
 
-            $( "#sliderbl2" ).slider({
+            $("#sliderbl2").slider({
                 value: bl2startpos,
                 min: servomin,
                 max: servomax,
@@ -324,7 +392,7 @@
                 }
             });
 
-            $( "#sliderbr1" ).slider({
+            $("#sliderbr1").slider({
                 value: br1startpos,
                 min: servomin,
                 max: servomax,
@@ -333,7 +401,7 @@
                 }
             });
 
-            $( "#sliderbr2" ).slider({
+            $("#sliderbr2").slider({
                 value: br2startpos,
                 min: servomin,
                 max: servomax,
@@ -341,6 +409,22 @@
                     controller('move');
                 }
             });
+            
+            $("#paddlehandle").draggable({
+                    containment: "#paddle",
+                            //css: "position: relative, top: 50px, left: 82px",
+                    drag: function(){
+                        onpaddlemove();
+                    }
+            });
+
+            $("#paddlehandle").css({
+                position: "relative",
+                top: "50px",
+                left: "82px"
+            });
+            
+            
 
             window.onload=function(){
                 controller('move');
